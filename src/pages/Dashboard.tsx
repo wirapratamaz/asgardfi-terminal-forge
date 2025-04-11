@@ -5,6 +5,8 @@ import TokenView from '@/components/TokenView';
 import DriftVaultsView from '@/components/DriftVaultsView';
 import StablecoinYieldsView from '@/components/StablecoinYieldsView';
 import SolYieldsView from '@/components/SolYieldsView';
+import JLPYieldsView from '@/components/JLPYieldsView';
+import LPYieldsView from '@/components/LPYieldsView';
 import Layout from '@/components/Layout';
 
 const Dashboard = () => {
@@ -26,6 +28,10 @@ const Dashboard = () => {
         return <StablecoinYieldsView />;
       case 'sol-yields':
         return <SolYieldsView />;
+      case 'jlp-yields':
+        return <JLPYieldsView />;
+      case 'lp-yields':
+        return <LPYieldsView />;
       default:
         return <div className="px-4 py-6">This view is not implemented yet</div>;
     }
