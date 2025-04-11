@@ -1,16 +1,13 @@
-
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
+  Area,
+  AreaChart
 } from 'recharts';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { getPriceHistoryData } from '@/lib/mockPriceData';
 import { Button } from '@/components/ui/button';
 
@@ -39,6 +36,7 @@ const formatCurrency = (value: number) => {
 
 const PriceChart: React.FC<PriceChartProps> = ({ token }) => {
   const [selectedPeriod, setSelectedPeriod] = useState(2); // Default to 1M
+  const [hoveredData, setHoveredData] = useState<any>(null);
 
   const chartData = useMemo(() => {
     const period = TIME_PERIODS[selectedPeriod]?.days || 30;
@@ -56,22 +54,55 @@ const PriceChart: React.FC<PriceChartProps> = ({ token }) => {
   }, [chartData]);
 
   const priceColor = useMemo(() => {
-    if (chartData.length < 2) return '#9b87f5';
+    if (chartData.length < 2) return '#10b981';
     return chartData[0].price < chartData[chartData.length - 1].price 
       ? '#10b981' // Green for price increase
       : '#ef4444'; // Red for price decrease
   }, [chartData]);
 
+  const currentPrice = chartData.length > 0 ? chartData[chartData.length - 1].price : 0;
+  const displayPrice = hoveredData ? hoveredData.price : currentPrice;
+  const displayDate = hoveredData ? 
+    (typeof hoveredData.date === 'string' && hoveredData.date.includes(' ') ? 
+      hoveredData.date : // Handle 1D view with time format
+      new Date(hoveredData.date).toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric', 
+        year: 'numeric' 
+      })
+    ) : 
+    new Date().toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric', 
+      year: 'numeric' 
+    });
+
+  const handleMouseMove = useCallback((data: any) => {
+    if (data && data.activePayload && data.activePayload.length > 0) {
+      setHoveredData(data.activePayload[0].payload);
+    }
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setHoveredData(null);
+  }, []);
+
   return (
     <div className="p-6 mb-6 bg-terminal-card rounded-lg border border-gray-800">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-white">{token} Price Chart</h2>
+        <div>
+          <h2 className="text-xl font-bold text-white">{token} Price Chart</h2>
+          <div className="mt-2 flex items-baseline">
+            <span className="text-2xl font-mono text-white mr-2">${displayPrice.toFixed(2)}</span>
+            <span className="text-sm text-terminal-text-secondary">{displayDate}</span>
+          </div>
+        </div>
         <div className="flex gap-2">
           {TIME_PERIODS.map((period, index) => (
             <Button
               key={period.label}
               variant={selectedPeriod === index ? "default" : "outline"}
-              className="px-3 py-1.5 h-auto"
+              className={`px-3 py-1.5 h-auto`}
               onClick={() => setSelectedPeriod(index)}
             >
               {period.label}
@@ -81,17 +112,23 @@ const PriceChart: React.FC<PriceChartProps> = ({ token }) => {
       </div>
 
       <div className="h-[400px] w-full">
-        <ChartContainer 
-          config={{ 
-            price: { 
-              color: priceColor 
-            }
-          }}
-        >
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={chartData}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+          >
+            <defs>
+              <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor={priceColor} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={priceColor} stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis 
               dataKey="date" 
+              stroke="#666"
               tickFormatter={(value) => {
                 const period = TIME_PERIODS[selectedPeriod]?.days || 30;
                 // For 1D, show time instead of date
@@ -118,50 +155,27 @@ const PriceChart: React.FC<PriceChartProps> = ({ token }) => {
             <YAxis 
               domain={[minPrice, maxPrice]} 
               tickFormatter={(value) => formatCurrency(value)}
+              stroke="#666"
+              axisLine={false}
+              tickLine={false}
+              width={60}
             />
-            <Tooltip content={<CustomTooltip token={token} />} />
-            <Line 
+            <Tooltip 
+              content={<></>} // We handle tooltip display manually
+              cursor={{ stroke: '#666', strokeWidth: 1, strokeDasharray: '3 3' }}
+            />
+            <Area 
               type="monotone" 
               dataKey="price" 
               stroke={priceColor} 
-              strokeWidth={2} 
-              dot={false} 
-              activeDot={{ r: 5 }}
+              strokeWidth={2}
+              fillOpacity={1}
+              fill="url(#colorPrice)" 
+              activeDot={{ r: 6, stroke: '#fff', strokeWidth: 2, fill: priceColor }}
             />
-          </LineChart>
-        </ChartContainer>
+          </AreaChart>
+        </ResponsiveContainer>
       </div>
-    </div>
-  );
-};
-
-interface CustomTooltipProps {
-  active?: boolean;
-  payload?: any[];
-  label?: string;
-  token: string;
-}
-
-const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label, token }) => {
-  if (!active || !payload || !payload.length) {
-    return null;
-  }
-
-  const price = payload[0].value;
-  const date = new Date(label);
-  const formattedDate = date.toLocaleDateString('en-US', { 
-    month: 'short', 
-    day: 'numeric', 
-    year: 'numeric'
-  });
-
-  return (
-    <div className="bg-terminal-card p-3 border border-gray-800 rounded-md shadow-lg">
-      <p className="font-medium text-white">{formattedDate}</p>
-      <p className="text-terminal-text-secondary">
-        <span className="font-bold">{token}: </span>
-        <span className="font-mono">{formatCurrency(price)}</span>
-      </p>
     </div>
   );
 };

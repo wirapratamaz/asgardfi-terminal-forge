@@ -1,4 +1,3 @@
-
 // This simulates price data for tokens
 // In a real application, this would come from an API
 
@@ -13,18 +12,38 @@ const generatePriceData = (
   
   let price = basePrice;
   
-  for (let i = days; i >= 0; i--) {
-    const date = new Date(now);
-    date.setDate(date.getDate() - i);
-    
-    // Add some random movement to simulate price changes
-    const change = price * (Math.random() * volatility * 2 - volatility);
-    price += change;
-    
-    data.push({
-      date: date.toISOString().split('T')[0],
-      price: parseFloat(price.toFixed(2))
-    });
+  // For 1-day view, generate hourly data points
+  if (days === 1) {
+    for (let i = 24; i >= 0; i--) {
+      const date = new Date(now);
+      date.setHours(date.getHours() - i);
+      
+      // Add some random movement to simulate price changes
+      const change = price * (Math.random() * volatility * 2 - volatility) * 0.4;
+      price += change;
+      
+      const formattedDate = `${date.toLocaleDateString()} ${date.getHours()}:00`;
+      
+      data.push({
+        date: formattedDate,
+        price: parseFloat(price.toFixed(2))
+      });
+    }
+  } else {
+    // For multi-day views, generate daily data points
+    for (let i = days; i >= 0; i--) {
+      const date = new Date(now);
+      date.setDate(date.getDate() - i);
+      
+      // Add some random movement to simulate price changes
+      const change = price * (Math.random() * volatility * 2 - volatility);
+      price += change;
+      
+      data.push({
+        date: date.toISOString().split('T')[0],
+        price: parseFloat(price.toFixed(2))
+      });
+    }
   }
   
   return data;
