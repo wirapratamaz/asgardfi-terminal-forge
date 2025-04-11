@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import GodModeHeader from '@/components/GodModeHeader';
 import ProtocolView from '@/components/ProtocolView';
 import TokenView from '@/components/TokenView';
+import DriftVaultsView from '@/components/DriftVaultsView';
 import Layout from '@/components/Layout';
 
 const Dashboard = () => {
@@ -17,6 +18,8 @@ const Dashboard = () => {
         return <ProtocolView />;
       case 'token':
         return <TokenView />;
+      case 'drift-vaults':
+        return <DriftVaultsView />;
       default:
         return <div className="px-4 py-6">This view is not implemented yet</div>;
     }
