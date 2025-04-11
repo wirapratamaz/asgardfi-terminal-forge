@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { X, Menu } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -20,9 +19,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="flex flex-col min-h-screen bg-terminal-background">
       <header className="border-b border-gray-800 py-4">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <span className="font-bold text-xl">AsgardFi</span>
-            <span className="text-sm px-2 py-0.5 rounded bg-primary text-white">Terminal</span>
+          <div className="flex items-center space-x-3">
+            <img 
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLloZPzV8kCG72j5tv1VFcqVmKxmXP9isGwg&s" 
+              alt="AsgardFi Logo" 
+              className="h-10 w-10"
+            />
+            <div>
+              <span className="font-bold text-xl">AsgardFi</span>
+              <span className="text-sm px-2 py-0.5 ml-2 rounded bg-primary text-white">Terminal</span>
+            </div>
           </div>
           
           <nav className="hidden md:flex space-x-6">
