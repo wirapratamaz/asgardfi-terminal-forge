@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type MarketData = {
   market: string;
@@ -30,10 +31,52 @@ const formatNumber = (num: number): string => {
 };
 
 const MarketTable: React.FC<MarketTableProps> = ({ title, data }) => {
-  return (
-    <div className="mb-8">
-      <h2 className="text-2xl font-bold mb-4">{title}</h2>
-      
+  const isMobile = useIsMobile();
+  
+  const renderMobileView = () => {
+    return (
+      <div className="space-y-4">
+        {data.map((row, i) => (
+          <div key={i} className="terminal-card p-4 border border-gray-800 rounded-md">
+            <div className="flex justify-between mb-2">
+              <span className="font-bold">{row.market}</span>
+              <span>{row.token}</span>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <div>
+                <p className="text-terminal-text-secondary">Deposits</p>
+                <p>{formatNumber(row.deposits_ui)}</p>
+              </div>
+              <div>
+                <p className="text-terminal-text-secondary">Borrows</p>
+                <p>{formatNumber(row.borrows_ui)}</p>
+              </div>
+              <div>
+                <p className="text-terminal-text-secondary">Liquidity</p>
+                <p>{formatNumber(row.available_liquidity_ui)}</p>
+              </div>
+              <div>
+                <p className="text-terminal-text-secondary">Util. Rate</p>
+                <p>{formatNumber(row.utilization_rate)}%</p>
+              </div>
+              <div>
+                <p className="text-terminal-text-secondary">Deposit Rate</p>
+                <p>{formatNumber(row.deposit_rate)}%</p>
+              </div>
+              <div>
+                <p className="text-terminal-text-secondary">Borrow Rate</p>
+                <p>{formatNumber(row.borrow_rate)}%</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+  
+  const renderDesktopView = () => {
+    return (
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="text-terminal-text-secondary text-left text-sm border-b border-gray-800">
@@ -74,6 +117,13 @@ const MarketTable: React.FC<MarketTableProps> = ({ title, data }) => {
           </tbody>
         </table>
       </div>
+    );
+  };
+
+  return (
+    <div className="mb-6 md:mb-8">
+      <h2 className="text-xl md:text-2xl font-bold mb-4">{title}</h2>
+      {isMobile ? renderMobileView() : renderDesktopView()}
     </div>
   );
 };

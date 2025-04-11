@@ -1,11 +1,21 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import { X, Menu } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Link } from 'react-router-dom';
 
 type LayoutProps = {
   children: React.ReactNode;
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-terminal-background">
       <header className="border-b border-gray-800 py-4">
@@ -16,20 +26,60 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
           
           <nav className="hidden md:flex space-x-6">
-            <a href="#" className="text-terminal-text-secondary hover:text-white">Dashboard</a>
-            <a href="#" className="text-terminal-text-secondary hover:text-white">Protocols</a>
-            <a href="#" className="text-terminal-text-secondary hover:text-white">Markets</a>
-            <a href="#" className="text-terminal-text-secondary hover:text-white">Analytics</a>
+            <Link to="/" className="text-terminal-text-secondary hover:text-white">Dashboard</Link>
+            <Link to="/" className="text-terminal-text-secondary hover:text-white">Protocols</Link>
+            <Link to="/" className="text-terminal-text-secondary hover:text-white">Markets</Link>
+            <Link to="/" className="text-terminal-text-secondary hover:text-white">Analytics</Link>
           </nav>
           
-          <button className="md:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-terminal-text-secondary">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
+          <button 
+            onClick={toggleMobileMenu}
+            className="md:hidden text-terminal-text-secondary"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileMenuOpen ? (
+              <X size={24} />
+            ) : (
+              <Menu size={24} />
+            )}
           </button>
         </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-16 left-0 right-0 z-50 bg-terminal-background border-b border-gray-800 animate-fade-in">
+            <div className="p-4 flex flex-col space-y-4">
+              <Link 
+                to="/" 
+                className="text-terminal-text-secondary hover:text-white py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <Link 
+                to="/" 
+                className="text-terminal-text-secondary hover:text-white py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Protocols
+              </Link>
+              <Link 
+                to="/" 
+                className="text-terminal-text-secondary hover:text-white py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Markets
+              </Link>
+              <Link 
+                to="/" 
+                className="text-terminal-text-secondary hover:text-white py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Analytics
+              </Link>
+            </div>
+          </div>
+        )}
       </header>
       
       <main className="flex-grow">
@@ -43,11 +93,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <p className="text-terminal-text-secondary">© 2025 AsgardFi. All rights reserved.</p>
             </div>
             
-            <div className="flex space-x-6">
-              <a href="#" className="text-terminal-text-secondary hover:text-white">Terms</a>
-              <a href="#" className="text-terminal-text-secondary hover:text-white">Privacy</a>
-              <a href="#" className="text-terminal-text-secondary hover:text-white">Documentation</a>
-              <a href="#" className="text-terminal-text-secondary hover:text-white">Support</a>
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+              <Link to="/" className="text-terminal-text-secondary hover:text-white">Terms</Link>
+              <Link to="/" className="text-terminal-text-secondary hover:text-white">Privacy</Link>
+              <Link to="/" className="text-terminal-text-secondary hover:text-white">Documentation</Link>
+              <Link to="/" className="text-terminal-text-secondary hover:text-white">Support</Link>
             </div>
           </div>
         </div>

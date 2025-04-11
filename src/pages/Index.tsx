@@ -4,6 +4,7 @@ import TokenSelector from '@/components/TokenSelector';
 import TokenOverview from '@/components/TokenOverview';
 import MarketTable from '@/components/MarketTable';
 import PriceChart from '@/components/PriceChart';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Mock data - in a real application, this would come from an API
 const TOKENS = ['SOL', 'ETH', 'BTC', 'WBTC', 'USDC', 'USDT', 'PYUSD', 'USDS'];
@@ -199,9 +200,10 @@ const MARGINFI_MARKETS = [
 
 const Index = () => {
   const [selectedToken, setSelectedToken] = useState('SOL');
+  const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen p-6 max-w-7xl mx-auto">
+    <div className="min-h-screen p-4 md:p-6 max-w-7xl mx-auto">
       <GodModeHeader />
       
       <TokenSelector 
@@ -217,15 +219,17 @@ const Index = () => {
       
       <PriceChart token={selectedToken} />
       
-      <MarketTable 
-        title="Kamino Markets"
-        data={KAMINO_MARKETS.filter(market => market.token === selectedToken)}
-      />
-      
-      <MarketTable 
-        title="Marginfi Markets"
-        data={MARGINFI_MARKETS.filter(market => market.token === selectedToken)}
-      />
+      <div className={`${isMobile ? 'space-y-8' : 'grid grid-cols-1 lg:grid-cols-2 gap-6'}`}>
+        <MarketTable 
+          title="Kamino Markets"
+          data={KAMINO_MARKETS.filter(market => market.token === selectedToken)}
+        />
+        
+        <MarketTable 
+          title="Marginfi Markets"
+          data={MARGINFI_MARKETS.filter(market => market.token === selectedToken)}
+        />
+      </div>
     </div>
   );
 };
