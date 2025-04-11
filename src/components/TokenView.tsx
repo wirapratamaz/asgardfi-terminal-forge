@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import GodModeHeader from '@/components/GodModeHeader';
 import TokenSelector from '@/components/TokenSelector';
 import TokenOverview from '@/components/TokenOverview';
 import MarketTable from '@/components/MarketTable';
@@ -198,16 +197,12 @@ const MARGINFI_MARKETS = [
   }
 ];
 
-const Index = () => {
+const TokenView = () => {
   const [selectedToken, setSelectedToken] = useState('SOL');
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen p-4 md:p-6 max-w-7xl mx-auto">
-      <GodModeHeader activeView={''} onViewChange={function (view: string): void {
-        throw new Error('Function not implemented.');
-      } } />
-      
+    <div className="px-4 py-6">
       <TokenSelector 
         tokens={TOKENS} 
         selectedToken={selectedToken}
@@ -236,4 +231,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default TokenView; 

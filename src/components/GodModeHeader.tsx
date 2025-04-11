@@ -1,8 +1,27 @@
-
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
 
-const GodModeHeader = () => {
+type GodModeHeaderProps = {
+  activeView: string;
+  onViewChange: (view: string) => void;
+};
+
+const GodModeHeader: React.FC<GodModeHeaderProps> = ({ activeView, onViewChange }) => {
+  const views = [
+    { name: 'Token', id: 'token' },
+    { name: 'Protocol', id: 'protocol' },
+    { name: 'Drift Vaults', id: 'drift-vaults' },
+    { name: 'Compare', id: 'compare' },
+    { name: 'Strategies', id: 'strategies' },
+    { name: 'Stablecoin Yields', id: 'stablecoin-yields' },
+    { name: 'Sol Yields', id: 'sol-yields' },
+    { name: 'JLP Yields', id: 'jlp-yields' },
+    { name: 'LP Yields', id: 'lp-yields' },
+    { name: 'Fee Comparison', id: 'fee-comparison' },
+    { name: 'Liquidations', id: 'liquidations' },
+    { name: 'Swap Recommendations', id: 'swap-recommendations' },
+  ];
+
   return (
     <div className="mb-6">
       <h1 className="text-4xl font-bold mb-6">Asgard God Mode</h1>
@@ -10,29 +29,17 @@ const GodModeHeader = () => {
       <div className="mb-4">
         <p className="text-sm text-terminal-text-secondary mb-2">View</p>
         <div className="flex flex-wrap gap-3">
-          {[
-            { name: 'Token', active: true },
-            { name: 'Protocol', active: false },
-            { name: 'Drift Vaults', active: false },
-            { name: 'Compare', active: false },
-            { name: 'Strategies', active: false },
-            { name: 'Stablecoin Yields', active: false },
-            { name: 'Sol Yields', active: false },
-            { name: 'JLP Yields', active: false },
-            { name: 'LP Yields', active: false },
-            { name: 'Fee Comparison', active: false },
-            { name: 'Liquidations', active: false },
-            { name: 'Swap Recommendations', active: false },
-          ].map((item) => (
+          {views.map((item) => (
             <button
-              key={item.name}
+              key={item.id}
               className={`flex items-center space-x-2 px-3 py-1 rounded-full ${
-                item.active
+                activeView === item.id
                   ? 'bg-primary text-white'
                   : 'text-terminal-text-secondary hover:bg-accent'
               }`}
+              onClick={() => onViewChange(item.id)}
             >
-              <span className={`h-3 w-3 rounded-full ${item.active ? 'bg-white' : 'border border-terminal-text-secondary'}`}></span>
+              <span className={`h-3 w-3 rounded-full ${activeView === item.id ? 'bg-white' : 'border border-terminal-text-secondary'}`}></span>
               <span>{item.name}</span>
             </button>
           ))}
