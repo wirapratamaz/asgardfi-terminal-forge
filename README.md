@@ -1,73 +1,107 @@
-# Welcome to your Lovable project
+# AsgardFi Terminal
 
-## Project info
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLloZPzV8kCG72j5tv1VFcqVmKxmXP9isGwg&s" alt="AsgardFi Logo" width="100" />
 
-**URL**: https://lovable.dev/projects/de69973a-fa00-403c-a88e-fa9094b28707
+## Overview
 
-## How can I edit this code?
+AsgardFi Terminal is an on-chain DeFi prime brokerage on Solana, focusing on providing tools for safe and convenient leverage across DeFi protocols such as marginfi, Kamino, and Solend. This dashboard allows users to monitor, analyze, and interact with various Solana DeFi protocols in a unified interface.
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **Protocol View**: Analyze protocol data with detailed metrics
+- **Token View**: Track token performance across various markets
+- **Drift Vaults**: Monitor Drift protocol vaults with detailed metrics
+- **Stablecoin Yields**: Compare stablecoin lending yields across protocols
+- **SOL Yields**: Track SOL lending rates, staking yields, and interest rate differentials
+- **JLP & LP Yields**: Access comprehensive yield data for Jupiter LP and other liquidity providers
+- **Real-time Metrics**: View up-to-date protocol performance data
+- **Responsive Design**: Optimized for both desktop and mobile experiences
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/de69973a-fa00-403c-a88e-fa9094b28707) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Technologies
 
 This project is built with:
 
-- Vite
-- TypeScript
 - React
-- shadcn-ui
+- TypeScript
+- Vite
 - Tailwind CSS
+- shadcn-ui
+- Recharts for data visualization
+- React Router for navigation
 
-## How can I deploy this project?
+## Getting Started
 
-Simply open [Lovable](https://lovable.dev/projects/de69973a-fa00-403c-a88e-fa9094b28707) and click on Share -> Publish.
+### Prerequisites
 
-## Can I connect a custom domain to my Lovable project?
+- Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Yes it is!
+### Installation
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```sh
+# Step 1: Clone the repository
+git clone <YOUR_GIT_URL>
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+# Step 2: Navigate to the project directory
+cd asgardfi-terminal-forge
+
+# Step 3: Install the necessary dependencies
+npm i
+
+# Step 4: Start the development server
+npm run dev
+```
+
+### Accessing the Application
+
+Once the development server is running, you can access the application at `http://localhost:5173` (or the port specified in your terminal).
+
+## Development
+
+### Project Structure
+
+- `/src/components`: UI components
+- `/src/pages`: Page components
+- `/src/hooks`: Custom React hooks
+- `/src/lib`: Utility functions and data
+
+### Adding New Features
+
+1. Create new components in the `/src/components` directory
+2. Update routing in the Dashboard component to include new views
+3. Follow the existing design patterns for consistent UI/UX
+
+## Deployment
+
+### Build for Production
+
+```sh
+# Generate a production build
+npm run build
+
+# Preview the production build locally
+npm run preview
+```
+
+The build artifacts will be stored in the `dist/` directory, ready for deployment to any static hosting service.
+
+### Hosting Options
+
+This application can be deployed to various hosting platforms:
+
+- Vercel
+- Netlify
+- GitHub Pages
+- AWS S3/CloudFront
+- Any static site hosting service
+
+### Custom Domain
+
+To connect a custom domain to your AsgardFi Terminal:
+
+1. Configure your DNS settings with your domain provider
+2. Set up the appropriate records (A, CNAME) pointing to your hosting service
+3. Configure SSL/TLS for secure connections
+
+## License
+
+© 2025 AsgardFi. All rights reserved.
