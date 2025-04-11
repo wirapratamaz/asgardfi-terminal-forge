@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import GodModeHeader from '@/components/GodModeHeader';
 import TokenSelector from '@/components/TokenSelector';
 import TokenOverview from '@/components/TokenOverview';
 import MarketTable from '@/components/MarketTable';
+import PriceChart from '@/components/PriceChart';
 
 // Mock data - in a real application, this would come from an API
 const TOKENS = ['SOL', 'ETH', 'BTC', 'WBTC', 'USDC', 'USDT', 'PYUSD', 'USDS'];
@@ -214,6 +214,8 @@ const Index = () => {
         token={selectedToken}
         data={TOKEN_DATA[selectedToken as keyof typeof TOKEN_DATA]}
       />
+      
+      <PriceChart token={selectedToken} />
       
       <MarketTable 
         title="Kamino Markets"
