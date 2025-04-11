@@ -3,6 +3,7 @@ import GodModeHeader from '@/components/GodModeHeader';
 import ProtocolView from '@/components/ProtocolView';
 import TokenView from '@/components/TokenView';
 import DriftVaultsView from '@/components/DriftVaultsView';
+import StablecoinYieldsView from '@/components/StablecoinYieldsView';
 import Layout from '@/components/Layout';
 
 const Dashboard = () => {
@@ -20,6 +21,8 @@ const Dashboard = () => {
         return <TokenView />;
       case 'drift-vaults':
         return <DriftVaultsView />;
+      case 'stablecoin-yields':
+        return <StablecoinYieldsView />;
       default:
         return <div className="px-4 py-6">This view is not implemented yet</div>;
     }
