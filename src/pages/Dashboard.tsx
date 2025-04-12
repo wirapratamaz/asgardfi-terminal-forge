@@ -9,6 +9,7 @@ import JLPYieldsView from '@/components/JLPYieldsView';
 import LPYieldsView from '@/components/LPYieldsView';
 import StrategiesView from '@/components/StrategiesView';
 import CompareView from '@/components/CompareView';
+import FeeComparisonView from '@/components/FeeComparisonView';
 import Layout from '@/components/Layout';
 
 const Dashboard = () => {
@@ -38,6 +39,8 @@ const Dashboard = () => {
         return <JLPYieldsView />;
       case 'lp-yields':
         return <LPYieldsView />;
+      case 'fee-comparison':
+        return <FeeComparisonView />;
       default:
         return <div className="px-4 py-6">This view is not implemented yet</div>;
     }
