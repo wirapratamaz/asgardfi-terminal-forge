@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { getTokenIcon } from '@/lib/tokenIcons';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 type TokenSelectorProps = {
@@ -16,7 +15,6 @@ const TokenSelector: React.FC<TokenSelectorProps> = ({ tokens, selectedToken, on
   return (
     <div className={`flex flex-wrap gap-2 mb-4 md:mb-6 ${isMobile ? 'justify-center' : ''}`}>
       {tokens.map((token) => {
-        const IconComponent = getTokenIcon(token);
         const isSelected = selectedToken === token;
         
         return (
@@ -30,10 +28,6 @@ const TokenSelector: React.FC<TokenSelectorProps> = ({ tokens, selectedToken, on
             )}
             onClick={() => onSelect(token)}
           >
-            <IconComponent className={cn(
-              "h-4 w-4",
-              isSelected ? "text-primary" : "text-terminal-text-secondary"
-            )} />
             <span>{token}</span>
           </button>
         );

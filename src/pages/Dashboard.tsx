@@ -8,6 +8,7 @@ import SolYieldsView from '@/components/SolYieldsView';
 import JLPYieldsView from '@/components/JLPYieldsView';
 import LPYieldsView from '@/components/LPYieldsView';
 import StrategiesView from '@/components/StrategiesView';
+import CompareView from '@/components/CompareView';
 import Layout from '@/components/Layout';
 
 const Dashboard = () => {
@@ -27,6 +28,8 @@ const Dashboard = () => {
         return <DriftVaultsView />;
       case 'strategies':
         return <StrategiesView />;
+      case 'compare':
+        return <CompareView />;
       case 'stablecoin-yields':
         return <StablecoinYieldsView />;
       case 'sol-yields':
