@@ -102,6 +102,6 @@ To connect a custom domain to your AsgardFi Terminal:
 2. Set up the appropriate records (A, CNAME) pointing to your hosting service
 3. Configure SSL/TLS for secure connections
 
-## License
+## Inspiration
 
-© 2025 AsgardFi. All rights reserved.
+This project was inspired by [@0xahzam](https://x.com/0xahzam)'s [post](https://x.com/0xahzam/status/1909616918455107997) introducing Asgard God Mode.
