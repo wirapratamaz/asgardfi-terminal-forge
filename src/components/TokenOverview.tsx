@@ -41,7 +41,6 @@ const TokenOverview: React.FC<TokenOverviewProps> = ({ token, data }) => {
     <div className="terminal-card p-4 md:p-6 mb-6 md:mb-8 animate-fade-in">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">{token}</h2>
-        <ChevronDown className="h-5 w-5 text-terminal-text-secondary" />
       </div>
       
       <div className={`grid grid-cols-2 ${isMobile ? 'gap-4' : 'md:grid-cols-5 gap-4'}`}>

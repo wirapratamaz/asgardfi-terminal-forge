@@ -10,6 +10,8 @@ import LPYieldsView from '@/components/LPYieldsView';
 import StrategiesView from '@/components/StrategiesView';
 import CompareView from '@/components/CompareView';
 import FeeComparisonView from '@/components/FeeComparisonView';
+import LiquidationsView from '@/components/LiquidationsView';
+import SwapRecommendationsView from '@/components/SwapRecommendationsView';
 import Layout from '@/components/Layout';
 
 const Dashboard = () => {
@@ -41,6 +43,10 @@ const Dashboard = () => {
         return <LPYieldsView />;
       case 'fee-comparison':
         return <FeeComparisonView />;
+      case 'liquidations':
+        return <LiquidationsView />;
+      case 'swap-recommendations':
+        return <SwapRecommendationsView />;
       default:
         return <div className="px-4 py-6">This view is not implemented yet</div>;
     }
